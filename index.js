@@ -16,8 +16,8 @@ app.use(express.json());
 // API Endpoints
 app.get('/api/products', (req, res) => {
   res.json([
-    { id: 1, name: 'Product 1', price: 10 },
-    { id: 2, name: 'Product 2', price: 20 },
+    { id: 1, name: 'Product 1', price: 10, quantity: 100 },
+    { id: 2, name: 'Product 2', price: 20, quantity: 200 },
   ]);
 });
 
