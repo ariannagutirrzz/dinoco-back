@@ -34,18 +34,18 @@ Follow these steps to set up and run the backend locally:
    [Download PostgreSQL](https://www.postgresql.org/download/)
 3. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/yeah-back.git
-   cd yeah-back
+       git clone https://github.com/your-username/yeah-back.git
+       cd yeah-back
    ```
 
 ### **Installation**:  
 1. Install dependencies
-  ```bash    
-      npm install
-  ```
+    ```bash    
+       npm install
+    ```
 2. Run the software:
    ```bash
-      npm run dev
+       npm run dev
    ```
 
 ---
