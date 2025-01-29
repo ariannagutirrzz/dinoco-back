@@ -1,29 +1,22 @@
-// server.js
 import express from 'express';
 import cors from 'cors';
-import supabase from './src/config/supabaseClient.js';
 import dotenv from 'dotenv';
+import apiRouter from './src/routes/index.js';
 
-// Initialize environment variables
+// Load environment variables
 dotenv.config();
 
-// Create the Express app
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// API Endpoints
-app.get('/api/products', (req, res) => {
-  res.json([
-    { id: 1, name: 'Product 1', price: 10, quantity: 100 },
-    { id: 2, name: 'Product 2', price: 20, quantity: 200 },
-  ]);
-});
+// Routes
+apiRouter(app);
 
 // Start the server
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
