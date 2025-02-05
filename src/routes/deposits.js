@@ -5,8 +5,8 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const depositos = await getDepositsFromSupabase();
-    res.status(200).json(depositos);
+    const deposits = await getDepositsFromSupabase();
+    res.status(200).json(deposits);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
