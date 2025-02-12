@@ -1,6 +1,6 @@
 # **Dinoco Back**
 
-The backend service for the **Yeah Inventory Management System**, designed to handle the core business logic, database interactions, and API endpoints. This backend is built with **Node.js** and **PostgreSQL**, providing a secure and scalable solution for managing inventory, sales, clients, and more.
+The backend service for the **Dinoco Inventory Management System**, designed to handle the core business logic, database interactions, and API endpoints. This backend is built with **Node.js** and **PostgreSQL**, providing a secure and scalable solution for managing inventory, sales, clients, and more.
 
 ---
 
