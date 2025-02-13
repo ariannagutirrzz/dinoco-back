@@ -4,6 +4,7 @@ import depositsRouter from './deposits.js';
 import usersRouter from './users.js';
 import clientsRouter from './clients.js';
 import providersRouter from './providers.js';
+import purchasesRouter from './purchases.js';
 
 
 function apiRouter(app) {
@@ -16,6 +17,7 @@ function apiRouter(app) {
   router.use('/users', usersRouter);
   router.use('/clients', clientsRouter);
   router.use('/providers', providersRouter);
+  router.use('/purchases', purchasesRouter);
 }
 
 export default apiRouter;
