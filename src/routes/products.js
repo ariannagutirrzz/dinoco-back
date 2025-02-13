@@ -1,16 +1,8 @@
 import { Router } from 'express';
-import { getProductsFromSupabase } from '../models/products.js';
+import { getAllProducts } from '../controllers/products.js';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-  try {
-    const products = await getProductsFromSupabase();
-    res.status(200).json(products);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
-  }
-});
+router.get('/', getAllProducts);
 
 export default router;
