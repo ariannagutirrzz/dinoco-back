@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getAllDeposits } from '../controllers/deposits.js';
+import { getAllDepositsController } from '../controllers/deposits.js';
 
 const router = Router();
 
-router.get('/', getAllDeposits);
+router.get('/', getAllDepositsController);
 
 export default router;

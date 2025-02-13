@@ -1,8 +1,8 @@
-import { getProductsFromSupabase } from "../models/products.js";
+import { getAllProductsService } from "../services/products.js";
 
-export const getAllProducts = async (req, res) => {
+export const getAllProductsController = async (req, res) => {
   try {
-    const products = await getProductsFromSupabase();
+    const products = await getAllProductsService();
 
     if(products.length > 0) {
       return res.status(200).json(products);

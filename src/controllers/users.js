@@ -1,8 +1,8 @@
-import { getUsersFromSupabase } from "../models/users.js";
+import { getAllUsersService } from "../services/users.js";
 
-export const getAllUsers = async (req, res) =>{
+export const getAllUsersController = async (req, res) =>{
   try {
-    const users = getUsersFromSupabase();
+    const users = await getAllUsersService();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
