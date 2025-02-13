@@ -5,7 +5,7 @@ import usersRouter from './users.js';
 import clientsRouter from './clients.js';
 import providersRouter from './providers.js';
 import purchasesRouter from './purchases.js';
-
+import salesRouter from './sales.js';
 
 function apiRouter(app) {
   const router = express.Router();
@@ -18,6 +18,7 @@ function apiRouter(app) {
   router.use('/clients', clientsRouter);
   router.use('/providers', providersRouter);
   router.use('/purchases', purchasesRouter);
+  router.use('/sales', salesRouter);
 }
 
 export default apiRouter;
