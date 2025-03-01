@@ -34,7 +34,7 @@ Follow these steps to set up and run the backend locally:
    [Download PostgreSQL](https://www.postgresql.org/download/)
 3. Clone the repository:
    ```bash
-       git clone https://github.com/your-username/yeah-back.git
+       git clone https://github.com/your-username/dinoco-back.git
        cd yeah-back
    ```
 
