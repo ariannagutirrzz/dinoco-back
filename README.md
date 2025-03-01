@@ -5,10 +5,6 @@ The backend service for the **Dinoco Inventory Management System**, designed to 
 ---
 
 ## **Features**
-- RESTful API to manage:
-  - Products, purchases, sales, clients, vendors, and stock.
-- Secure implementation of CRUD operations with strong validations.
-- Database designed with **PostgreSQL**, adhering to 3NF for optimal performance.
 - Invoice generation for sales with detailed product and pricing breakdown.
 - Statistics module for insights like top-selling products and stock trends.
 - Integration-ready endpoints for seamless communication with the frontend.
@@ -18,7 +14,6 @@ The backend service for the **Dinoco Inventory Management System**, designed to 
 
 ## **Technologies**
 - **Backend Framework:** Node.js (Express.js)
-- **Database:** PostgreSQL
 - **Security:** Validation and authorization implemented for sensitive endpoints
 - **Tools:** Postman, Supabase
 
