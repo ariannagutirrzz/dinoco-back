@@ -9,3 +9,31 @@ export async function getUsersFromSupabase() {
   }
   return users;
 }
+
+export async function findById(id) {
+  let { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
+  return data;
+}
+
+export async function findByEmail(email) {
+  let { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  if (error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
+  return data;
+}
