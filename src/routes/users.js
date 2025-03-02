@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { getAllUsersController } from '../controllers/users.js';
+import { 
+    deleteOneUserController,
+    getAllUsersController 
+} from '../controllers/users.js';
 
 const router = Router();
 
 router.get('/', getAllUsersController);
+router.delete('/:id', deleteOneUserController);
 
 export default router;
