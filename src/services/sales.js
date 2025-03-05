@@ -1,4 +1,4 @@
-import { 
+import {
   salesExists,
   deleteSalesFromSupabase,
   getSalesFromSupabase
@@ -9,13 +9,12 @@ export const getAllSalesService = async (req, res) => {
     const sales = await getSalesFromSupabase();
 
     if(!sales || sales.length === 0){
-      throw new Error('No sales found');
-    } else {
-      return sales;
+      return [];
     }
 
+    return sales
   } catch (error){
-    res.status(500).json({ error: error.message });
+    throw new Error('An error occurred: ' + error.message);
   }
 }
 
