@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { getAllPurchasesController } from '../controllers/purchases.js';
+import { 
+    deleteOnePurchaseController,
+    getAllPurchasesController 
+} from '../controllers/purchases.js';
 
 const router = Router();
 
 router.get('/', getAllPurchasesController);
+router.delete('/:id', deleteOnePurchaseController);
 
 export default router;

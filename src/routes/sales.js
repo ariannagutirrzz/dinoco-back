@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { getAllSalesController } from '../controllers/sales.js';
+import { 
+    deleteOneSaleController,
+    getAllSalesController 
+} from '../controllers/sales.js';
 
 const router = Router();
 
 router.get('/', getAllSalesController);
+router.delete('/:id', deleteOneSaleController);
 
 export default router;
