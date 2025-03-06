@@ -1,20 +1,22 @@
-import { 
+import {
   userExists,
   deleteUsersFromSupabase,
   getUsersFromSupabase } from "../models/users.js";
+
+// GET ALL USERS
 
 export const getAllUsersService = async (req, res) => {
   try {
     const users = await getUsersFromSupabase();
 
     if(!users || users.length === 0){
-      throw new Error('No users found');
-    } else {
-      return users;
+      return []
     }
 
+    return users;
+
   } catch (error){
-    res.status(500).json({ error: error.message });
+    throw new Error('An error occurred: ' + error.message);
   }
 }
 

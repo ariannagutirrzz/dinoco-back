@@ -3,6 +3,8 @@ import {
   deletePurchasesFromSupabase,
   getPurchasesFromSupabase } from "../models/purchases.js";
 
+// GET ALL PURCHASES
+
 export const getAllPurchasesService = async (req, res) => {
   try {
     const purchases = await getPurchasesFromSupabase();
@@ -10,8 +12,8 @@ export const getAllPurchasesService = async (req, res) => {
     if(!purchases || purchases.length === 0){
      return []
     }
-    return purchases
 
+    return purchases
   } catch (error){
     throw new Error('An error occurred: ' + error.message);
   }

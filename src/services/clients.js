@@ -4,6 +4,8 @@ import {
   deleteClientsFromSupabase,
 } from "../models/clients.js";
 
+// GET ALL CLIENTS
+
 export const getAllClientsService = async (req, res) => {
   try {
     const clients = await getClientsFromSupabase();
@@ -11,11 +13,9 @@ export const getAllClientsService = async (req, res) => {
     if(!clients || clients.length === 0){
       return [];
     }
-      return clients;
-
-
+    return clients;
   } catch (error){
-    res.status(500).json({ error: error.message });
+    throw new Error('An error occurred: ' + error.message);
   }
 }
 

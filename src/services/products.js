@@ -11,12 +11,11 @@ export const getAllProductsService = async (req, res) => {
     const products = await getProductsFromSupabase();
 
     if (!products || products.length === 0) {
-      throw new Error('No products found');
-    } else {
-      return products;
+      return []
     }
+    return products
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    throw new Error('An error occurred: ' + error.message);
   }
 };
 

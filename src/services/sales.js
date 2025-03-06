@@ -4,6 +4,8 @@ import {
   getSalesFromSupabase
  } from "../models/sales.js";
 
+// GET ALL SALES
+
 export const getAllSalesService = async (req, res) => {
   try {
     const sales = await getSalesFromSupabase();

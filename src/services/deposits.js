@@ -1,21 +1,21 @@
-import { 
+import {
   depositExists,
   deleteDepositsFromSupabase,
-  getDepositsFromSupabase 
+  getDepositsFromSupabase
 } from "../models/deposits.js";
+
+//  GET ALL DEPOSITS
 
 export const getAllDepositsService = async (req, res) => {
   try {
     const deposits = await getDepositsFromSupabase();
 
     if(!deposits || deposits.length === 0){
-      throw new Error('No deposits found');
-    } else {
-      return deposits;
+      return []
     }
-
+    return deposits;
   } catch (error){
-    res.status(500).json({ error: error.message });
+    throw new Error('An error occurred: ' + error.message);
   }
 }
 
