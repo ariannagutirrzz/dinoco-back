@@ -3,7 +3,7 @@ import supabase from '../config/supabaseClient.js';
 // GET ALL PRODUCTS FROM SUPABASE
 export async function getProductsFromSupabase() {
   let { data: productos, error } = await supabase.from('products').select('*');
-
+  console.log('productos', productos);
   if (error) {
     console.error('Error fetching products:', error);
     return [];
