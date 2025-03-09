@@ -1,6 +1,7 @@
 import {
   getAllProductsService,
   deleteOneProductService,
+  createProductService,
 } from '../services/products.js';
 
 export const getAllProductsController = async (req, res) => {
@@ -35,5 +36,36 @@ export const deleteOneProductController = async (req, res) => {
     }
 
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const createProductController = async (req, res) => {
+  console.log('Creating product:', req.body);
+  try {
+    const { name, price, quantity, id, sales_unit, category } = req.body;
+
+    // Validate required fields
+    if (!name || !price || !quantity || !id || !sales_unit || !category) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    if (typeof price !== 'number' || price <= 0) {
+      return res.status(400).json({ error: 'Price must be a positive number' });
+    }
+
+    const productData = {
+      name,
+      price,
+      quantity,
+      id,
+      sales_unit,
+      category,
+    };
+    const newProduct = await createProductService(productData);
+
+    return res.status(201).json(newProduct);
+  } catch (error) {
+    console.error('Error creating product:', error);
+    return res.status(500).json({ error: error.message });
   }
 };
