@@ -9,7 +9,7 @@ import {
 const router = Router();
 
 router.get('/', getAllProductsController);
-router.post('/', createProductController); // Add the POST route
+router.post('/', createProductController);
 router.delete('/:id', deleteOneProductController);
 
 export default router;

@@ -50,10 +50,11 @@ export const deleteProductFromSupabase = async (id) => {
     throw error;
   }
 };
-
 export const createProduct = async (productData) => {
   console.log('Product data in model:', productData);
+
   try {
+    // Insert the product (sin verificar autenticación)
     const { data, error } = await supabase
       .from('products')
       .insert([productData])

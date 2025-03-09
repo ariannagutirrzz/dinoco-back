@@ -42,10 +42,10 @@ export const deleteOneProductController = async (req, res) => {
 export const createProductController = async (req, res) => {
   console.log('Creating product:', req.body);
   try {
-    const { name, price, quantity, id, sales_unit, category } = req.body;
+    const { name, price, quantity, deposit, sales_unit, category } = req.body;
 
-    // Validate required fields
-    if (!name || !price || !quantity || !id || !sales_unit || !category) {
+    // Validate required fields (sin incluir id)
+    if (!name || !price || !quantity || !sales_unit || !category) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -57,12 +57,13 @@ export const createProductController = async (req, res) => {
       name,
       price,
       quantity,
-      id,
+      deposit,
       sales_unit,
       category,
     };
-    const newProduct = await createProductService(productData);
 
+    const newProduct = await createProductService(productData);
+    console.log('New product in controller:', newProduct);
     return res.status(201).json(newProduct);
   } catch (error) {
     console.error('Error creating product:', error);
