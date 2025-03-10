@@ -48,14 +48,12 @@ export const deleteOneProductService = async (id) => {
 };
 
 export const createProductService = async (productData) => {
-  console.log('Product data in service:', productData);
   try {
     if (!productData || Object.keys(productData).length === 0) {
       throw new Error('Product data is required');
     }
 
     const newProduct = await createProduct(productData);
-    console.log('New product in service:', newProduct);
 
     if (!newProduct) {
       throw new Error('Failed to create product');
