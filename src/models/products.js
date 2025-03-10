@@ -50,3 +50,21 @@ export const deleteProductFromSupabase = async (id) => {
     throw error;
   }
 };
+export const createProduct = async (productData) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .insert([productData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error in createProduct (model):', error);
+    throw error;
+  }
+};
