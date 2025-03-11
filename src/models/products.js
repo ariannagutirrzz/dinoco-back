@@ -3,7 +3,6 @@ import supabase from '../config/supabaseClient.js';
 // GET ALL PRODUCTS FROM SUPABASE
 export async function getProductsFromSupabase() {
   let { data: productos, error } = await supabase.from('products').select('*');
-  console.log('productos', productos);
   if (error) {
     console.error('Error fetching products:', error);
     return [];
@@ -65,6 +64,27 @@ export const createProduct = async (productData) => {
     return data ? data[0] : null;
   } catch (error) {
     console.error('Error in createProduct (model):', error);
+    throw error;
+  }
+};
+
+// UPDATE A PRODUCT IN SUPABASE
+export const updateProduct = async (id, productData) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .update(productData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating product:', error);
     throw error;
   }
 };

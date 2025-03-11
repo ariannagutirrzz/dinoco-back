@@ -2,6 +2,7 @@ import {
   getAllProductsService,
   deleteOneProductService,
   createProductService,
+  updateProductService,
 } from '../services/products.js';
 
 export const getAllProductsController = async (req, res) => {
@@ -65,6 +66,32 @@ export const createProductController = async (req, res) => {
     return res.status(201).json(newProduct);
   } catch (error) {
     console.error('Error creating product:', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+export const updateProductController = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+    const { name, price, quantity, deposit, sales_unit, category, expire_date } = req.body;
+
+    if (!name || !price || !quantity || !sales_unit || !category) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const updatedProduct = await updateProductService(id, {
+      name,
+      price,
+      quantity,
+      deposit,
+      sales_unit,
+      category,
+      expire_date: expire_date || null,
+    });
+
+    return res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error("Error updating product:", error);
     return res.status(500).json({ error: error.message });
   }
 };

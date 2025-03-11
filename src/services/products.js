@@ -3,6 +3,7 @@ import {
   productExists,
   deleteProductFromSupabase,
   createProduct,
+  updateProduct
 } from '../models/products.js';
 
 //  GET ALL PRODUCTS
@@ -63,5 +64,18 @@ export const createProductService = async (productData) => {
   } catch (error) {
     console.error('Error in createProductService:', error);
     throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+export const updateProductService = async (id, productData) => {
+  try {
+    const updatedProduct = await updateProduct(id, productData);
+    if (!updatedProduct) {
+      throw new Error("Failed to update product");
+    }
+    return updatedProduct;
+  } catch (error) {
+    console.error("Error in updateProductService:", error);
+    throw new Error("An error occurred: " + error.message);
   }
 };
