@@ -77,3 +77,44 @@ export const deleteUsersFromSupabase = async (id) => {
     throw error;
   }
 };
+
+// CREATE A USER IN SUPABASE
+export const createUser = async (userData) => {
+  try {
+    const { data, error } = await supabase
+      .from('users') // Changed from 'clients' to 'users'
+      .insert([userData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error in createUser (model):', error);
+    throw error;
+  }
+};
+
+// UPDATE A USER IN SUPABASE
+export const updateUser = async (id, userData) => {
+  try {
+    const { data, error } = await supabase
+      .from('users') // Changed from 'clients' to 'users'
+      .update(userData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating user:', error);
+    throw error;
+  }
+};

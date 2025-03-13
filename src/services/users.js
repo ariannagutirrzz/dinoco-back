@@ -1,6 +1,8 @@
 import {
   userExists,
   deleteUsersFromSupabase,
+  createUser,
+  updateUser,
   getUsersFromSupabase } from "../models/users.js";
 
 // GET ALL USERS
@@ -43,6 +45,47 @@ export const deleteOneUserService = async (id) => {
     // If no error, the deletion was successful
     return true;
   } catch (error) {
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+// CREATE A USER SERVICE
+export const createUserService = async (userData) => {
+  try {
+    // Validate input
+    if (!userData || Object.keys(userData).length === 0) {
+      throw new Error('User data is required');
+    }
+
+    // Call the createUser function (from your model)
+    const newUser = await createUser(userData);
+
+    // Check if the user was created successfully
+    if (!newUser) {
+      throw new Error('Failed to create user');
+    }
+
+    return newUser;
+  } catch (error) {
+    console.error('Error in createUserService:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+// UPDATE A USER SERVICE
+export const updateUserService = async (id, userData) => {
+  try {
+    // Call the updateUser function (from your model)
+    const updatedUser = await updateUser(id, userData);
+
+    // Check if the user was updated successfully
+    if (!updatedUser) {
+      throw new Error('Failed to update user');
+    }
+
+    return updatedUser;
+  } catch (error) {
+    console.error('Error in updateUserService:', error);
     throw new Error('An error occurred: ' + error.message);
   }
 };
