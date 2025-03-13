@@ -49,3 +49,43 @@ export const deleteClientsFromSupabase = async (id) => {
     throw error;
   }
 };
+
+export const createClient = async (clientData) => {
+  try {
+    const { data, error } = await supabase
+      .from('clients')
+      .insert([clientData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error in createClient (model):', error);
+    throw error;
+  }
+};
+
+// UPDATE A CLIENT IN SUPABASE
+export const updateClient = async (id, clientData) => {
+  try {
+    const { data, error } = await supabase
+      .from('clients')
+      .update(clientData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating client:', error);
+    throw error;
+  }
+};
