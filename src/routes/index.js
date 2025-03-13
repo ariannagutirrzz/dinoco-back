@@ -8,6 +8,7 @@ import purchasesRouter from './purchases.js';
 import salesRouter from './sales.js';
 import authRouter from './auth.js';
 import categoriesRouter from './categories.js';
+import refundsRouter from './refunds.js';
 
 function apiRouter(app) {
   const router = express.Router();
@@ -23,6 +24,7 @@ function apiRouter(app) {
   router.use('/sales', salesRouter);
   router.use('/auth', authRouter);
   router.use('/categories', categoriesRouter);
+  router.use('/refunds', refundsRouter);
 }
 
 export default apiRouter;
