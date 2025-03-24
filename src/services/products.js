@@ -1,81 +1,113 @@
-import {
-  getProductsFromSupabase,
-  productExists,
-  deleteProductFromSupabase,
-  createProduct,
-  updateProduct
-} from '../models/products.js';
+import supabase from '../config/supabaseClient.js';
 
-//  GET ALL PRODUCTS
+// Get all products from Supabase
+export const getAllProductsService = async () => {
+  let { data: products, error } = await supabase.from('products').select('*');
 
-export const getAllProductsService = async (req, res) => {
-  try {
-    const products = await getProductsFromSupabase();
-
-    if (!products || products.length === 0) {
-      return [];
-    }
-    return products;
-  } catch (error) {
-    throw new Error('An error occurred: ' + error.message);
+  if (error) {
+    console.error('Error fetching products:', error);
+    return [];
   }
+  return products;
 };
 
-// DELETE ONE PRODUCT
-
-export const deleteOneProductService = async (id) => {
-  if (!id) {
-    throw new Error('Product ID is required');
-  }
-
+// Check if a product exists by ID
+export const productExists = async (id) => {
   try {
-    // Check if the product exists. This was necessary because Supabase doesn't return an error if the product doesn't exist, so we have to check it manually from another function (check the model)
-    const exists = await productExists(id);
-    if (!exists) {
-      throw new Error('Product not found');
-    }
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', id)
+      .single();
 
-    const { error } = await deleteProductFromSupabase(id);
+    if (error && error.code === 'PGRST116') {
+      return false; // No rows found
+    }
 
     if (error) {
       throw error;
     }
 
-    // If no error, the deletion was successful
-    return true;
+    return !!data; // Return true if the product exists
   } catch (error) {
-    throw new Error('An error occurred: ' + error.message);
+    console.error('Error checking if product exists:', error);
+    throw error;
   }
 };
 
+// Delete a product from Supabase by ID
+export const deleteOneProductService = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+
+    return { data, error };
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    throw error;
+  }
+};
+
+// Create a new product in Supabase
 export const createProductService = async (productData) => {
   try {
-    if (!productData || Object.keys(productData).length === 0) {
-      throw new Error('Product data is required');
+    const { data, error } = await supabase
+      .from('products')
+      .insert([productData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Error creating product:', error);
+      throw new Error(error.message);
     }
 
-    const newProduct = await createProduct(productData);
-
-    if (!newProduct) {
-      throw new Error('Failed to create product');
-    }
-
-    return newProduct;
+    return data ? data[0] : null;
   } catch (error) {
-    console.error('Error in createProductService:', error);
-    throw new Error('An error occurred: ' + error.message);
+    console.error('Error in createProduct (model):', error);
+    throw error;
   }
 };
 
+// Update an existing product in Supabase
 export const updateProductService = async (id, productData) => {
   try {
-    const updatedProduct = await updateProduct(id, productData);
-    if (!updatedProduct) {
-      throw new Error("Failed to update product");
+    const { data, error } = await supabase
+      .from('products')
+      .update(productData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Error updating product:', error);
+      throw new Error(error.message);
     }
-    return updatedProduct;
+
+    return data ? data[0] : null;
   } catch (error) {
-    console.error("Error in updateProductService:", error);
-    throw new Error("An error occurred: " + error.message);
+    console.error('Error updating product:', error);
+    throw error;
+  }
+};
+
+// Update the stock quantity of a product
+export const updateProductStock = async (productId, newQuantity) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .update({ quantity: newQuantity })
+      .eq('id', productId)
+      .select(); // Use .select() to get the updated record
+
+    if (error) {
+      console.error('Error updating product stock:', error);
+      throw error;
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating product stock:', error);
+    throw error;
   }
 };
