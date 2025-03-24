@@ -1,23 +1,25 @@
 import {
   depositExists,
+  getDepositsFromSupabase,
   deleteDepositsFromSupabase,
-  getDepositsFromSupabase
+  createDeposit,
+  updateDeposit,
 } from "../models/deposits.js";
 
-//  GET ALL DEPOSITS
+// GET ALL DEPOSITS
 
 export const getAllDepositsService = async (req, res) => {
   try {
     const deposits = await getDepositsFromSupabase();
 
-    if(!deposits || deposits.length === 0){
-      return []
+    if (!deposits || deposits.length === 0) {
+      return [];
     }
     return deposits;
-  } catch (error){
+  } catch (error) {
     throw new Error('An error occurred: ' + error.message);
   }
-}
+};
 
 // DELETE ONE DEPOSIT
 
@@ -27,7 +29,7 @@ export const deleteOneDepositService = async (id) => {
   }
 
   try {
-    // Check if the deposit exists. This was necessary because Supabase doesn't return an error if the deposit doesn't exist, so we have to check it manually from another function (check the model)
+    // Check if the deposit exists. This is necessary because Supabase doesn't return an error if the deposit doesn't exist, so we verify manually.
     const exists = await depositExists(id);
     if (!exists) {
       throw new Error('Deposit not found');
@@ -46,3 +48,38 @@ export const deleteOneDepositService = async (id) => {
   }
 };
 
+// CREATE A DEPOSIT
+
+export const createDepositService = async (depositData) => {
+  try {
+    if (!depositData || Object.keys(depositData).length === 0) {
+      throw new Error('Deposit data is required');
+    }
+
+    const newDeposit = await createDeposit(depositData);
+
+    if (!newDeposit) {
+      throw new Error('Failed to create deposit');
+    }
+
+    return newDeposit;
+  } catch (error) {
+    console.error('Error in createDepositService:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+// UPDATE A DEPOSIT
+
+export const updateDepositService = async (id, depositData) => {
+  try {
+    const updatedDeposit = await updateDeposit(id, depositData);
+    if (!updatedDeposit) {
+      throw new Error("Failed to update deposit");
+    }
+    return updatedDeposit;
+  } catch (error) {
+    console.error("Error in updateDepositService:", error);
+    throw new Error("An error occurred: " + error.message);
+  }
+};

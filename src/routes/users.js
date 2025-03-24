@@ -8,6 +8,7 @@ import {
 
 const router = Router();
 
+// Define the route for GET /users
 router.get('/', getAllUsersController);
 router.post('/', createUserController);
 router.delete('/:id', deleteOneUserController);

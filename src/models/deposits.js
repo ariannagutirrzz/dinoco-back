@@ -1,13 +1,13 @@
 import supabase from '../config/supabaseClient.js';
 
 export async function getDepositsFromSupabase() {
-  let { data: depositos, error } = await supabase.from('deposits').select('*');
+  let { data: deposits, error } = await supabase.from('deposits').select('*');
 
   if (error) {
     console.error('Error fetching deposits:', error);
     return [];
   }
-  return depositos;
+  return deposits;
 }
 
 // Check if a deposit exists so we can delete it (if we don't check and try to delete a deposit that doesn't exist, Supabase will return a success message, but the deposit won't be deleted)
@@ -46,6 +46,46 @@ export const deleteDepositsFromSupabase = async (id) => {
     return { data, error };
   } catch (error) {
     console.error('Error deleting deposit:', error);
+    throw error;
+  }
+};
+
+export const createDeposit = async (depositData) => {
+  try {
+    const { data, error } = await supabase
+      .from('deposits')
+      .insert([depositData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error in createDeposit (model):', error);
+    throw error;
+  }
+};
+
+// UPDATE A DEPOSIT IN SUPABASE
+export const updateDeposit = async (id, depositData) => {
+  try {
+    const { data, error } = await supabase
+      .from('deposits')
+      .update(depositData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating deposit:', error);
     throw error;
   }
 };

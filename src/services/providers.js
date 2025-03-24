@@ -2,6 +2,8 @@ import {
   providerExists,
   getProvidersFromSupabase,
   deleteProvidersFromSupabase,
+  createProvider,
+  updateProvider,
 } from "../models/providers.js";
 
 // GET ALL PROVIDERS
@@ -10,11 +12,11 @@ export const getAllProvidersService = async (req, res) => {
   try {
     const providers = await getProvidersFromSupabase();
 
-    if(!providers || providers.length === 0){
-      return []
+    if (!providers || providers.length === 0) {
+      return [];
     }
     return providers;
-  } catch (error){
+  } catch (error) {
     throw new Error('An error occurred: ' + error.message);
   }
 }
@@ -43,5 +45,37 @@ export const deleteOneProviderService = async (id) => {
     return true;
   } catch (error) {
     throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+export const createProviderService = async (providerData) => {
+  try {
+    if (!providerData || Object.keys(providerData).length === 0) {
+      throw new Error('Provider data is required');
+    }
+
+    const newProvider = await createProvider(providerData);
+
+    if (!newProvider) {
+      throw new Error('Failed to create provider');
+    }
+
+    return newProvider;
+  } catch (error) {
+    console.error('Error in createProviderService:', error);
+    throw new Error('An error occurred: ' + error.message);
+  }
+};
+
+export const updateProviderService = async (id, providerData) => {
+  try {
+    const updatedProvider = await updateProvider(id, providerData);
+    if (!updatedProvider) {
+      throw new Error("Failed to update provider");
+    }
+    return updatedProvider;
+  } catch (error) {
+    console.error("Error in updateProviderService:", error);
+    throw new Error("An error occurred: " + error.message);
   }
 };

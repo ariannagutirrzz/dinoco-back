@@ -49,3 +49,43 @@ export const deleteProvidersFromSupabase = async (id) => {
     throw error;
   }
 };
+
+export const createProvider = async (providerData) => {
+  try {
+    const { data, error } = await supabase
+      .from('providers')
+      .insert([providerData])
+      .select(); // Use .select() to return the inserted record
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error in createProvider (model):', error);
+    throw error;
+  }
+};
+
+// UPDATE A PROVIDER IN SUPABASE
+export const updateProvider = async (id, providerData) => {
+  try {
+    const { data, error } = await supabase
+      .from('providers')
+      .update(providerData)
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+
+    return data ? data[0] : null;
+  } catch (error) {
+    console.error('Error updating provider:', error);
+    throw error;
+  }
+};
